@@ -1,10 +1,19 @@
 import './App.css';
+import Section from './component/section/section.component';
+import Footer from './component/footer/footer.component';
+import Navbar from './component/navbar/navbar.component';
+import { Fragment } from 'react';
+
 
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline items-center justify-center flex  font-bold text-5xl ">
-      Harmony Music App
-    </h1>
+      <Fragment>
+        <div className='container mx-auto flex flex-col items-center justify-center max-h-screen h-screen'>
+          <Navbar/>
+          <Section/>
+          <Footer/>
+        </div>
+      </Fragment>
   );
 }
 
