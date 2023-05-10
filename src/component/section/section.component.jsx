@@ -1,15 +1,26 @@
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import {AiFillHome} from 'react-icons/ai'
 import {BiSearch} from 'react-icons/bi'
 import {MdOutlineCreateNewFolder} from 'react-icons/md'
 import {FcLike} from 'react-icons/fc'
 import Cover from '../../assets/cover-2.jpg';
 import {BiChevronLeft,BiChevronRight,BiCaretDown,BiChevronUp} from 'react-icons/bi'
+import { Outlet } from "react-router-dom";
+import { UserContext } from "../../context/user/user.context";
+import { signOutUser } from "../../firebase/firebase";
 
 
 
 
 const Section=()=>{
+    const {currentUser}=useContext(UserContext);
+
+
+    const handleSignOut=()=>{
+        signOutUser();
+        localStorage.setItem('isSignedIn',JSON.stringify(false));
+    }
+
     return(
         <Fragment>
             <div className='section mx-auto flex flex-row md:flex-row items-center justify-center w-full max-w-screen h-screen  overflow-x-hidden left-0'>
@@ -62,6 +73,7 @@ const Section=()=>{
                         <div className="asd">
                             <div className="asdasd flex text-lg w-full">
                                 <h1 className="asdas pr-3 inline-header">Test User</h1>
+                                {currentUser?<button onClick={handleSignOut}>Sign Out</button>:null}
                                 <h1><BiCaretDown/></h1>
                                 <h1 className="asd hidden"><BiChevronUp/></h1>
                             </div>
@@ -80,7 +92,7 @@ const Section=()=>{
                     </div>
                 </div>
             </div>
-
+            <Outlet/>
         </Fragment>
     )
 };

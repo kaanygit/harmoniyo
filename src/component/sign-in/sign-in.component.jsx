@@ -9,7 +9,7 @@ const defaultFormFields={
 }
 
 
-const SignIn=()=>{
+const SignIn=({onError})=>{
     const [formFields,setFormFields]=useState(defaultFormFields);
     const {email,password}=formFields;
     const resetFormFields=()=>{setFormFields(defaultFormFields)};
@@ -22,8 +22,8 @@ const SignIn=()=>{
             console.log(response)
         }catch(error){
             switch(error.code){
-                case 'auth/wrong-password':alert('Incorrect password or Email !');break
-                case 'auth/user-not-found':alert('User Not Found');break
+                case 'auth/wrong-password':onError('Incorrect password or Email !');break
+                case 'auth/user-not-found':onError('User Not Found');break
                 default:console.log(error);
             }
         }

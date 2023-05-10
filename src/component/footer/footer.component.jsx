@@ -2,6 +2,7 @@ import { Fragment } from "react"
 import {HiFastForward,HiOutlineVolumeOff,HiOutlineVolumeUp} from 'react-icons/hi';
 import {HiBackward} from 'react-icons/hi2';
 import {VscDebugStart,VscDebugPause} from 'react-icons/vsc';
+import { Outlet } from "react-router-dom";
 
 const Footer=()=>{
     return(
@@ -26,7 +27,7 @@ const Footer=()=>{
                     </div>
                 </div>
             </div>
-            
+            <Outlet/>
         </Fragment>
     )
 }

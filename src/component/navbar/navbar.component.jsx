@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { Outlet } from "react-router-dom";
 
 
 const Navbar=()=>{
@@ -11,6 +12,7 @@ const Navbar=()=>{
                     </h1>
                 </nav>
             </div>
+            <Outlet/>
         </Fragment>
     )
 }

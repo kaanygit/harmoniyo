@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react"
 import {createAuthUserWithEmailAndPassword, createUserDocumentFromAuth} from '../../firebase/firebase';
 
+
 const defaultFormFields={
     displayName:'',
     email:'',
@@ -8,7 +9,7 @@ const defaultFormFields={
     confirmPassword:''
 }
 
-const SignUp=()=>{
+const SignUp=({onError})=>{
     const [formFields,setFormFields]=useState(defaultFormFields);
     const {displayName,email,password,confirmPassword}=formFields;
     const resetFormFields=()=>{setFormFields(defaultFormFields)}; 
@@ -17,7 +18,7 @@ const SignUp=()=>{
     const handleSubmit=async(e)=>{
         e.preventDefault();
         if(password !== confirmPassword){
-            alert('parolalar es değil');
+            onError('Password not the same!')
             return;
         }
         try{
@@ -26,7 +27,7 @@ const SignUp=()=>{
             resetFormFields()
         }catch(error){
             if(error.code==='auth/email-already-in-use'){
-                alert('This email has already been received');
+                onError('This email has already been received!');
             }else{
                 console.log('Error Code : ',error);
             }
