@@ -1,6 +1,7 @@
-import { Fragment, useState } from "react"
-import { Link } from "react-router-dom";
+import { Fragment, useContext, useState } from "react"
+import { Link, Navigate } from "react-router-dom";
 import {signInAuthUserWithEmailAndPassword} from '../../firebase/firebase'
+import { UserContext } from "../../context/user/user.context";
 
 
 const defaultFormFields={
@@ -10,6 +11,18 @@ const defaultFormFields={
 
 
 const SignIn=({onError})=>{
+    const {currentUser}=useContext(UserContext);
+    const [girisOldu,setGirisOldu]=useState(false);
+    const girisNavigate=()=>{
+        if(currentUser){
+            setGirisOldu(!girisOldu);
+            <Navigate to='/home'/>;
+        }else{
+            return;
+        }
+    }
+    
+
     const [formFields,setFormFields]=useState(defaultFormFields);
     const {email,password}=formFields;
     const resetFormFields=()=>{setFormFields(defaultFormFields)};

@@ -3,7 +3,12 @@ import {getFirestore,doc,getDoc,setDoc} from 'firebase/firestore'
 import {signInWithEmailAndPassword,getAuth, createUserWithEmailAndPassword, onAuthStateChanged,signOut} from 'firebase/auth'
 // Your web app's Firebase configuration
 const firebaseConfig = {
-
+    apiKey: "AIzaSyCHkO-VTBCO1rkhrA5P470InFN5plnZVEg",
+    authDomain: "harmoniyo-74029.firebaseapp.com",
+    projectId: "harmoniyo-74029",
+    storageBucket: "harmoniyo-74029.appspot.com",
+    messagingSenderId: "694008292946",
+    appId: "1:694008292946:web:67597be7480964bf48e18b"
 };
 
 // Initialize Firebase

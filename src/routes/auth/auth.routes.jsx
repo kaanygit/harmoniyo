@@ -5,16 +5,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Navigate, Outlet } from "react-router-dom";
 import { UserContext } from "../../context/user/user.context";
-import { signOutUser } from "../../firebase/firebase";
 
 
 
 const Auth=()=>{
-    const currentUser=useContext(UserContext);
+    const {currentUser}=useContext(UserContext);
     const [isSignedIn, setIsSignedIn] = useState(false);
     const [signTrue,setSignTrue]=useState(false);
     const [error,setError]=useState(null);
-    const girisYapildi=JSON.parse(localStorage.getItem('isSignedIn'))
+
     const handleSignUp=()=>{
         setSignTrue(!signTrue);
     }
@@ -26,24 +25,24 @@ const Auth=()=>{
     useEffect(()=>{
         if(currentUser){
             setIsSignedIn(true);
-            localStorage.setItem('isSignIn',JSON.stringify(true));
-            localStorage.setItem('isSignedIn',JSON.stringify(true));
+            localStorage.setItem('kullanıcıGirisGlobal',JSON.stringify(true));
+            localStorage.setItem('girisState',JSON.stringify(true));
         }else{
             setIsSignedIn(false);
-            localStorage.setItem('isSignIn',JSON.stringify(false));
+            localStorage.setItem('kullanıcıGirisGlobal',JSON.stringify(false));
+            localStorage.setItem('girisState',JSON.stringify(false));
         }
     },[currentUser])
 
-    const handleSignOut=()=>{
-        signOutUser();
-        localStorage.setItem('isSignedIn',JSON.stringify(false));
-    }
     return(
         <Fragment>
             {error &&<p>{error.message}</p>}
             <ToastContainer/>
-            {currentUser?<button onClick={handleSignOut}>as</button>:null}
-            {!girisYapildi?(
+            {currentUser?(
+                <>
+                    <Navigate to='/home'/>
+                </>
+            ):(
                 <>
                     <div className="container max-w-screen w-full flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8 bg-black1">
                         <div>
@@ -83,10 +82,6 @@ const Auth=()=>{
                             </p>  
                         </div>
                     </div>    
-                </>
-            ):(
-                <>
-                    <Navigate to='/'/>
                 </>
             )}
 

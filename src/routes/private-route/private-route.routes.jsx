@@ -1,23 +1,22 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate,Outlet } from "react-router-dom";
 import { useContext ,useEffect} from "react";
 import { UserContext } from "../../context/user/user.context";
 
 const PrivateRoute=()=>{
     const {currentUser}=useContext(UserContext);
-    const isSignedIn = JSON.parse(localStorage.getItem("isSignedIn"));
+    const girisState = JSON.parse(localStorage.getItem("girisState"));
 
     useEffect(() => {
-        const isSignedIn = JSON.parse(localStorage.getItem("isSignedIn"));
-        if (currentUser && !isSignedIn) {
-            localStorage.setItem("isSignedIn", JSON.stringify(true));
+        if (currentUser && !girisState) {
+            localStorage.setItem("girisState", JSON.stringify(true));
             console.log('1');
-        }else if(!currentUser && isSignedIn) {
+        }else if(!currentUser && girisState) {
             console.log('2');
         }
       }, [currentUser]);
 
     
-    return isSignedIn ? <Navigate to='/home' />:<Navigate to='/'  />
+    return girisState ? <Outlet/>:<Navigate to='/'/>
 }
 
 export default PrivateRoute;

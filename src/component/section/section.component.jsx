@@ -18,7 +18,7 @@ const Section=()=>{
 
     const handleSignOut=()=>{
         signOutUser();
-        localStorage.setItem('isSignedIn',JSON.stringify(false));
+        localStorage.setItem('girisState',JSON.stringify(false));
     }
 
     return(
