@@ -1,19 +1,16 @@
-import './App.css';
-import Section from './component/section/section.component';
-import Footer from './component/footer/footer.component';
-import Navbar from './component/navbar/navbar.component';
 import { Fragment } from 'react';
-
+import {Route,Routes} from 'react-router-dom';
+import Home from './routes/home/home.routes'
+import Auth from './routes/auth/auth.routes';
 
 function App() {
   return (
+    <Routes>
       <Fragment>
-        <div className='container mx-auto flex flex-col items-center justify-center max-h-screen h-screen'>
-          <Navbar/>
-          <Section/>
-          <Footer/>
-        </div>
+        <Route path='/' exact element={<Auth />} />
+        <Route path='/home' element={<Home />} />
       </Fragment>
+    </Routes>
   );
 }
 
