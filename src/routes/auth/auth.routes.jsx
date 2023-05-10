@@ -1,16 +1,13 @@
-import { Fragment, useContext, useEffect, useState } from "react"
+import { Fragment, useState } from "react"
 import SignIn from "../../component/sign-in/sign-in.component";
 import SignUp from "../../component/sign-up/sign-up.component";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Navigate, Outlet } from "react-router-dom";
-import { UserContext } from "../../context/user/user.context";
+import {  Outlet } from "react-router-dom";
 
 
 
 const Auth=()=>{
-    const {currentUser}=useContext(UserContext);
-    const [isSignedIn, setIsSignedIn] = useState(false);
     const [signTrue,setSignTrue]=useState(false);
     const [error,setError]=useState(null);
 
@@ -22,27 +19,11 @@ const Auth=()=>{
         toast.error(errorMessage);
     }
 
-    useEffect(()=>{
-        if(currentUser){
-            setIsSignedIn(true);
-            localStorage.setItem('kullanıcıGirisGlobal',JSON.stringify(true));
-            localStorage.setItem('girisState',JSON.stringify(true));
-        }else{
-            setIsSignedIn(false);
-            localStorage.setItem('kullanıcıGirisGlobal',JSON.stringify(false));
-            localStorage.setItem('girisState',JSON.stringify(false));
-        }
-    },[currentUser])
 
     return(
         <Fragment>
             {error &&<p>{error.message}</p>}
             <ToastContainer/>
-            {currentUser?(
-                <>
-                    <Navigate to='/home'/>
-                </>
-            ):(
                 <>
                     <div className="container max-w-screen w-full flex min-h-full h-screen flex-col justify-center px-6 py-12 lg:px-8 bg-black1">
                         <div>
@@ -83,8 +64,6 @@ const Auth=()=>{
                         </div>
                     </div>    
                 </>
-            )}
-
             <Outlet/>      
         </Fragment>
     )
