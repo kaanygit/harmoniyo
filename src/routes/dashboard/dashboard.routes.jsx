@@ -8,7 +8,7 @@ const Dashboard=()=>{
         <Fragment>
             <div className='container mx-auto flex flex-col items-center justify-center max-h-screen h-screen border-box'>
                 <Navbar/>
-                <div className="h-full bg-gray-800 w-full">içeridk</div>
+                <div className="h-full bg-gray-800 w-full">içerik</div>
                 <Footer/>
             </div>
         </Fragment>

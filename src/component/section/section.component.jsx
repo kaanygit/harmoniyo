@@ -1,5 +1,5 @@
 import { Fragment, useContext, useEffect, useState } from "react";
-import {AiFillHome} from 'react-icons/ai'
+import {AiFillHome,AiFillHeart} from 'react-icons/ai'
 import {BiSearch} from 'react-icons/bi'
 import {MdOutlineCreateNewFolder} from 'react-icons/md'
 import {FcLike} from 'react-icons/fc'
@@ -51,7 +51,7 @@ const Section=()=>{
                             <h1 className="text-white pl-3 transition-transform duration-300 transform-gpu hover:scale-110">Create Playlist</h1>
                         </div>
                         <div className="flex ">
-                            <h1 className="liked"><FcLike/></h1>
+                            <h1 className="liked text-customRed"><AiFillHeart/></h1>
                             <h1 className="text-white pl-3 transition-transform duration-300 transform-gpu hover:scale-110">Liked Songs</h1>
                         </div>
                     </div>

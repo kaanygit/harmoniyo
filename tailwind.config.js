@@ -15,6 +15,7 @@ module.exports = {
         black2:'#191919',
         black3:'#17191a',
         black4:'#111',
+        customRed:'#FC4F00'
       }
     },
   },
