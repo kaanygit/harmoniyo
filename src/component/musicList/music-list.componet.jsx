@@ -5,7 +5,7 @@ import {AiOutlinePlayCircle,AiOutlineHeart} from 'react-icons/ai'
 import {BsDownload} from 'react-icons/bs'
 import {BiDotsHorizontalRounded,BiTimeFive} from 'react-icons/bi'
 
-const MusicList=()=>{
+const MusicList=({isPlaying,setIsPlaying})=>{
     return(
         <div>
             <div>
@@ -29,7 +29,7 @@ const MusicList=()=>{
                     </div>
                     <div><p className='pr-5'><BiTimeFive/></p></div>
                 </div>
-                <div><Audios/></div>
+                <div><Audios setIsPlaying={setIsPlaying} isPlaying={isPlaying}/></div>
             </div>
         </div>
     )

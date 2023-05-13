@@ -4,7 +4,7 @@ import {BiSearch} from 'react-icons/bi'
 import {MdOutlineCreateNewFolder} from 'react-icons/md'
 import {FcLike} from 'react-icons/fc'
 import {BiChevronLeft,BiChevronRight,BiCaretDown,BiChevronUp} from 'react-icons/bi'
-import { Outlet, useSearchParams } from "react-router-dom";
+import { Navigate, Outlet, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/user/user.context";
 import { signOutUser } from "../../firebase/firebase";
 import List from "../list/list.component";
@@ -14,8 +14,9 @@ import MusicList from "../musicList/music-list.componet";
 
 
 
-const Section=()=>{
-    const [openList,setOpenList]=useState(false)
+const Section=({isPlaying,setIsPlaying})=>{
+    const [openList,setOpenList]=useState(false);
+    const [openSearch,setOpenSearch]=useState(false);
     const {currentUser}=useContext(UserContext);
 
     const backWoardClick=()=>{
@@ -25,6 +26,10 @@ const Section=()=>{
     }
     const handleSignOut=()=>{
         signOutUser();
+    };
+    
+    const searchBarOpen =()=>{
+        setOpenSearch(!openSearch);
     }
 
     useEffect(()=>{
@@ -37,12 +42,17 @@ const Section=()=>{
                 <div className='sidebar w-1/5 p-4 bg-black1 md:text-1xl lg:text-2xl fixed  h-full sticky max-w-screen overflow-auto scrollbar-hide'>
                     <div className="section-one ">
                         <div className="home flex ">
-                            <h1 className="text-white "><AiFillHome/></h1>
+                            <h1 className="text-white " onClick={()=>{<Navigate to='/dashboard'/>}}><AiFillHome/></h1>
                             <h1 className="text-white pl-3 transition-transform duration-300 transform-gpu hover:scale-110">Home</h1>
                         </div>
                         <div className="search-bar flex ">
-                            <h1 className="text-white"><BiSearch/></h1>
-                            <h1 className="text-white pl-3 transition-transform duration-300 transform-gpu hover:scale-110">Search</h1>
+                            {!openSearch?
+                                null
+                                :
+                                <input className="text-white w-full bg-gray-500 rounded-md text-xl shadow-sm " placeholder='Search Music'/>
+                            }
+                            <h1 className={`text-white transition-transform duration-300 transform-gpu hover:scale-110 ${openSearch?'pl-3':null}`}  onClick={searchBarOpen}><BiSearch/></h1>
+                            <h1 className={`text-white pl-3 transition-transform duration-300 transform-gpu hover:scale-110 ${openSearch?'hidden':null}`} onClick={searchBarOpen}>Search</h1>
                         </div>
                     </div>
                     <div className="section-two pt-7">
@@ -87,7 +97,7 @@ const Section=()=>{
                     {!openList?
                         <SectionList openList={openList} setOpenList={setOpenList}/>
                         :
-                        <MusicList/>
+                        <MusicList setIsPlaying={setIsPlaying} isPlaying={isPlaying} />
                     }
                 </div>
             </div>

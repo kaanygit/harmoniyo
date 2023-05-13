@@ -1,14 +1,26 @@
-import { Fragment, useEffect, useState } from "react"
+import { Fragment, useEffect, useRef, useState } from "react"
 import {HiFastForward,HiOutlineVolumeOff,HiOutlineVolumeUp} from 'react-icons/hi';
 import {HiBackward} from 'react-icons/hi2';
 import {VscDebugStart,VscDebugPause} from 'react-icons/vsc';
 import { Outlet } from "react-router-dom";
 
-const Footer=({ isPlaying, togglePlay })=>{
-
+const Footer=({ isPlaying ,setIsPlaying})=>{
+    // const [volume, setVolume] = useState(50);
+    const volumeRef=useRef(50);
+    
+    const previewPause=()=>{
+        if(isPlaying){
+            setIsPlaying(isPlaying);
+        }else{
+            setIsPlaying(!isPlaying)
+        }
+    }
+    
     useEffect(()=>{
         console.log(isPlaying);
-    },[isPlaying])
+        console.log(volumeRef.current.value);
+    },[isPlaying,volumeRef])
+
 
     return(
         <Fragment>
@@ -19,14 +31,14 @@ const Footer=({ isPlaying, togglePlay })=>{
                     </div>
                     <div className="flex justify-center items-center ">
                         <h1 className="backwoard pr-2 pl-2 transition-transform duration-300 transform-gpu hover:scale-110 text-xl "><HiBackward/></h1>
-                        <h1  onClick={togglePlay} className="start pr-2 pl-2 text-bold transition-transform duration-300 transform-gpu hover:scale-110 font-bold text-2xl border-solid border-2 border-sky-500 rounded-3xl bg-gray-200 text-customBlue "><VscDebugStart/></h1>
-                        <h1 className="pause hidden transition-transform duration-300 transform-gpu hover:scale-110 text-2xl border-solid border-2 border-sky-500 rounded-3xl bg-gray-200 text-customBlue "><VscDebugPause/> </h1>
+                        <h1  onClick={previewPause} className="start pr-2 pl-2 text-bold transition-transform duration-300 transform-gpu hover:scale-110 font-bold text-2xl border-solid border-2 border-sky-500 rounded-3xl bg-gray-200 text-customBlue ">{!isPlaying?<VscDebugStart/>:<VscDebugPause/> }</h1>
+                        {/* <h1 className="pause hidden transition-transform duration-300 transform-gpu hover:scale-110 text-2xl border-solid border-2 border-sky-500 rounded-3xl bg-gray-200 text-customBlue "><VscDebugPause/> </h1> */}
                         <h1 className="foward pr-2 pl-2 transition-transform duration-300 transform-gpu hover:scale-110 text-xl"><HiFastForward/></h1>
                     </div>
                     <div className="flex justify-center right-0">
                         <div className="justify-between flex  ">
                             <h1 className="text-xl transition-transform duration-300 transform-gpu hover:scale-110 pr-2 "><HiOutlineVolumeOff/></h1>
-                            <input type="range" className="asdas"/>
+                            <input type="range" className="asdas" ref={volumeRef}/>
                             <h1 className=" transition-transform duration-300 transform-gpu hover:scale-110 text-xl"><HiOutlineVolumeUp/></h1>
                         </div>
                     </div>

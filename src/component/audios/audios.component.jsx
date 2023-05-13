@@ -2,8 +2,7 @@ import { useRef, useState } from 'react';
 import Cover from '../../assets/cover-2.jpg';
 import { MusicData } from '../../music-data';
 
-const Audios=()=>{
-    const [isPlaying, setIsPlaying] = useState(false);
+const Audios=({isPlaying,setIsPlaying})=>{
       const audioRef = useRef(null);
 
       const togglePlay = () => {
