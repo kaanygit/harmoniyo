@@ -11,7 +11,7 @@ const PrivateRoute = () => {
     //         console.log('giris olmadı');
     //     }
     // },[currentUser])
-    let auth = {'token':true}
+    let auth = {'token':false}
     return(
         auth ?<Outlet/>:<Navigate to="/login"/>
     )

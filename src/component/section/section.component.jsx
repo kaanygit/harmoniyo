@@ -2,7 +2,6 @@ import { Fragment, useContext, useEffect, useState } from "react";
 import {AiFillHome,AiFillHeart} from 'react-icons/ai'
 import {BiSearch} from 'react-icons/bi'
 import {MdOutlineCreateNewFolder} from 'react-icons/md'
-import {FcLike} from 'react-icons/fc'
 import {BiChevronLeft,BiChevronRight,BiCaretDown,BiChevronUp} from 'react-icons/bi'
 import { Navigate, Outlet, useSearchParams } from "react-router-dom";
 import { UserContext } from "../../context/user/user.context";
@@ -10,13 +9,16 @@ import { signOutUser } from "../../firebase/firebase";
 import List from "../list/list.component";
 import SectionList from "../section-list/section-list.component";
 import MusicList from "../musicList/music-list.componet";
-
+import { ListData } from "../../data";
 
 
 
 const Section=({isPlaying,setIsPlaying})=>{
     const [openList,setOpenList]=useState(false);
     const [openSearch,setOpenSearch]=useState(false);
+    const [createNewList,setCreateNewList]=useState(false);
+    const [newListName, setNewListName] = useState("");
+
     const {currentUser}=useContext(UserContext);
 
     const backWoardClick=()=>{
@@ -30,11 +32,37 @@ const Section=({isPlaying,setIsPlaying})=>{
     
     const searchBarOpen =()=>{
         setOpenSearch(!openSearch);
+    };
+    const createNewLists=()=>{
+        console.log('yeni liste isteği');
+        console.log(ListData);
+        const listDataId=ListData.length;
+        console.log(listDataId);
+        setCreateNewList(!createNewList);
+        console.log(newList);
+    }
+    const newList=(event)=>{
+        event.preventDefault();
+        console.log('liste');
+        setCreateNewList(!createNewList);
+        console.log(newList);
+        console.log(newListName);
+        if(newListName.trim() !== ""){
+            let pushlanacak={
+                "id": ListData.length+1,
+                "name": newListName,
+                "imageUrl": "https://e1.pxfuel.com/desktop-wallpaper/588/103/desktop-wallpaper-best-4-software-developer-backgrounds-on-hip-software-engineer.jpg",
+                "like":false
+              };
+            ListData.push(pushlanacak);
+        }
+
     }
 
     useEffect(()=>{
         console.log(openList);
-    },[openList])
+        console.log(ListData);
+    },[openList,ListData])
 
     return(
         <Fragment>
@@ -57,8 +85,22 @@ const Section=({isPlaying,setIsPlaying})=>{
                     </div>
                     <div className="section-two pt-7">
                         <div className="flex">
-                            <h1 className="text-white"><MdOutlineCreateNewFolder/></h1>
-                            <h1 className="text-white pl-3 transition-transform duration-300 transform-gpu hover:scale-110">Create Playlist</h1>
+                            {
+                                createNewList?(
+                                    <div className="">
+                                        <form onSubmit={newList} className="justify-center items-center flex pb-3">
+                                            <input type="text" className="newListInput w-full rounded-md bg-gray-500 text-xl shadow-sm text-white " placeholder="New List Name" value={newListName} onChange={(e) => setNewListName(e.target.value)}/>
+                                            <button type="submit" className="newListCreateButton border-2 text-gray-100 bg-customBlue py-0.1 px-2 text-md leading-6 rounded-md hover:bg-blue-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 ml-2">Create</button>
+                                        </form>
+                                    </div>
+                                )
+                                :(
+                                <Fragment>
+                                    <h1 className="text-white" onClick={createNewLists}><MdOutlineCreateNewFolder/></h1>
+                                    <h1 className="text-white pl-3 transition-transform duration-300 transform-gpu hover:scale-110" onClick={createNewLists}>Create Playlist</h1>
+                                </Fragment>
+                                )
+                            }
                         </div>
                         <div className="flex ">
                             <h1 className="liked text-customRed"><AiFillHeart/></h1>
@@ -104,6 +146,6 @@ const Section=({isPlaying,setIsPlaying})=>{
             <Outlet/>
         </Fragment>
     )
-};
+}
 
 export default Section;
